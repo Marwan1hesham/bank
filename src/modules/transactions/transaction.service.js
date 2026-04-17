@@ -75,6 +75,8 @@ export const withdraw = async (req, res, next) => {
   await account.save();
 
   if (balanceAfter < 0) {
+    account.balance = balanceBefore;
+    await account.save();
     await db_service.create({
       model: transactionModel,
       data: {
@@ -82,7 +84,7 @@ export const withdraw = async (req, res, next) => {
         amount,
         type: transactionTypeEnum.withdrawal,
         balanceBefore,
-        balanceAfter,
+        balanceAfter: balanceBefore,
         status: transactionStatusEnum.failed,
       },
     });

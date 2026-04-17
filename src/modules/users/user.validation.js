@@ -9,7 +9,7 @@ export const registerSchema = {
       cPassword: joi.string().valid(joi.ref("password")).required(),
       phone: joi.string(),
       accountNumber: joi.string().required(),
-      balance: joi.number().required().min(0),
+      balance: joi.number().min(0),
     })
     .required()
     .with("password", "cPassword"),
